@@ -5,40 +5,40 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.hsalf.smilerating.BaseRating;
-import com.hsalf.smilerating.SmileRating;
+import com.hsalf.smilerating.SmileyRating;
 
-public class MainActivity extends AppCompatActivity implements SmileRating.OnSmileySelectionListener, SmileRating.OnRatingSelectedListener {
+public class MainActivity extends AppCompatActivity implements SmileyRating.OnSmileySelectionListener, SmileyRating.OnRatingSelectedListener {
 
     private static final String TAG = "MainActivity";
 
-    private SmileRating mSmileRating;
+    private SmileyRating mSmileyRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mSmileRating = (SmileRating) findViewById(R.id.ratingView);
-        mSmileRating.setOnSmileySelectionListener(this);
-        mSmileRating.setOnRatingSelectedListener(this);
-        mSmileRating.setSelectedSmile(BaseRating.GREAT);
+        mSmileyRating = (SmileyRating) findViewById(R.id.ratingView);
+        mSmileyRating.setOnSmileySelectionListener(this);
+        mSmileyRating.setOnRatingSelectedListener(this);
+        mSmileyRating.setSelectedSmiley(BaseRating.GREAT);
     }
 
     @Override
     public void onSmileySelected(@BaseRating.Smiley int smiley, boolean reselected) {
         switch (smiley) {
-            case SmileRating.BAD:
+            case SmileyRating.BAD:
                 Log.i(TAG, "Bad");
                 break;
-            case SmileRating.GOOD:
+            case SmileyRating.GOOD:
                 Log.i(TAG, "Good");
                 break;
-            case SmileRating.GREAT:
+            case SmileyRating.GREAT:
                 Log.i(TAG, "Great");
                 break;
-            case SmileRating.OKAY:
+            case SmileyRating.OKAY:
                 Log.i(TAG, "Okay");
                 break;
-            case SmileRating.TERRIBLE:
+            case SmileyRating.TERRIBLE:
                 Log.i(TAG, "Terrible");
                 break;
         }

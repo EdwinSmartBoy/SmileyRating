@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * Created by sujith on 11/10/16.
  */
-public class SmileRating extends BaseRating {
+public class SmileyRating extends BaseRating {
 
     private static final String TAG = "RatingView";
 
@@ -68,7 +68,7 @@ public class SmileRating extends BaseRating {
     private Paint mTextPaint = new Paint();
 
     @Smiley
-    private int mSelectedSmile = OKAY;
+    private int mSelectedSmiley = OKAY;
     @Smiley
     private int mPreviousSmile = -1;
     @Smiley
@@ -88,18 +88,18 @@ public class SmileRating extends BaseRating {
     private OnSmileySelectionListener mOnSmileySelectionListener = null;
     private float mPlaceHolderScale = 1f;
 
-    public SmileRating(Context context) {
+    public SmileyRating(Context context) {
         super(context);
         init();
     }
 
-    public SmileRating(Context context, AttributeSet attrs) {
+    public SmileyRating(Context context, AttributeSet attrs) {
         super(context, attrs);
         parseAttrs(attrs);
         init();
     }
 
-    public SmileRating(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SmileyRating(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         parseAttrs(attrs);
         init();
@@ -107,17 +107,17 @@ public class SmileRating extends BaseRating {
 
     private void parseAttrs(AttributeSet attrs) {
         if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SmileRating);
-            mAngryColor = a.getColor(R.styleable.SmileRating_angryColor, mAngryColor);
-            mNormalColor = a.getColor(R.styleable.SmileRating_normalColor, mNormalColor);
-            mDrawingColor = a.getColor(R.styleable.SmileRating_drawingColor, mDrawingColor);
-            mPlaceHolderSmileColor = a.getColor(R.styleable.SmileRating_placeHolderSmileColor,
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SmileyRating);
+            mAngryColor = a.getColor(R.styleable.SmileyRating_angryColor, mAngryColor);
+            mNormalColor = a.getColor(R.styleable.SmileyRating_normalColor, mNormalColor);
+            mDrawingColor = a.getColor(R.styleable.SmileyRating_drawingColor, mDrawingColor);
+            mPlaceHolderSmileColor = a.getColor(R.styleable.SmileyRating_placeHolderSmileColor,
                     mPlaceHolderSmileColor);
-            mPlaceholderBackgroundColor = a.getColor(R.styleable.SmileRating_placeHolderBackgroundColor,
+            mPlaceholderBackgroundColor = a.getColor(R.styleable.SmileyRating_placeHolderBackgroundColor,
                     mPlaceholderBackgroundColor);
-            mTextSelectedColor = a.getColor(R.styleable.SmileRating_textSelectionColor,
+            mTextSelectedColor = a.getColor(R.styleable.SmileyRating_textSelectionColor,
                     mTextSelectedColor);
-            mTextNonSelectedColor = a.getColor(R.styleable.SmileRating_textNonSelectionColor,
+            mTextNonSelectedColor = a.getColor(R.styleable.SmileyRating_textNonSelectionColor,
                     mTextNonSelectedColor);
             a.recycle();
         }
@@ -188,10 +188,10 @@ public class SmileRating extends BaseRating {
     };
 
     private void notifyListener() {
-        boolean reselected = mPreviousSmile == getSelectedSmile();
-        mPreviousSmile = mSelectedSmile;
+        boolean reselected = mPreviousSmile == getSelectedSmiley();
+        mPreviousSmile = mSelectedSmiley;
         if (mOnSmileySelectionListener != null) {
-            mOnSmileySelectionListener.onSmileySelected(mSelectedSmile, reselected);
+            mOnSmileySelectionListener.onSmileySelected(mSelectedSmiley, reselected);
         }
         if (mOnRatingSelectedListener != null) {
             mOnRatingSelectedListener.onRatingSelected(getRating(), reselected);
@@ -223,7 +223,7 @@ public class SmileRating extends BaseRating {
         mPlaceholderLinePaint.setStrokeWidth(mHeight * 0.05f);
         /*getSmiley(mSmileys, 0.5f, divisions, mFromRange, mToRange,
                 mFaceCenter, mSmilePath, mCenterY);*/
-        setSelectedSmile(mPendingActionSmile, mTouchPoints.get(mPendingActionSmile), false, false);
+        setSelectedSmiley(mPendingActionSmile, mTouchPoints.get(mPendingActionSmile), false, false);
         Log.i(TAG, "Selected smile:" + getSmileName(mPendingActionSmile));
     }
 
@@ -310,13 +310,13 @@ public class SmileRating extends BaseRating {
 
     public void setAngryColor(@ColorInt int color) {
         this.mAngryColor = color;
-        getSmiley(mSmileys, getFractionBySmiley(mSelectedSmile), divisions, mFromRange, mToRange,
+        getSmiley(mSmileys, getFractionBySmiley(mSelectedSmiley), divisions, mFromRange, mToRange,
                 mFaceCenter, mSmilePath, mCenterY);
     }
 
     public void setNormalColor(@ColorInt int color) {
         this.mNormalColor = color;
-        getSmiley(mSmileys, getFractionBySmiley(mSelectedSmile), divisions, mFromRange, mToRange,
+        getSmiley(mSmileys, getFractionBySmiley(mSelectedSmiley), divisions, mFromRange, mToRange,
                 mFaceCenter, mSmilePath, mCenterY);
     }
 
@@ -395,7 +395,7 @@ public class SmileRating extends BaseRating {
                 distance = d;
             }
         }
-        setSelectedSmile(smile, point, false, true);
+        setSelectedSmiley(smile, point, false, true);
     }
 
     private void moveSmile(float position) {
@@ -416,10 +416,10 @@ public class SmileRating extends BaseRating {
             Point point = mTouchPoints.get(smile);
             boolean touched = isSmileyBounds(point.x, point.y, x, y, mCenterY);
             if (touched) {
-                if (smile == getSelectedSmile()) {
+                if (smile == getSelectedSmiley()) {
                     notifyListener();
                 } else {
-                    setSelectedSmile(smile, point, true, true);
+                    setSelectedSmiley(smile, point, true, true);
                 }
             }
         }
@@ -435,8 +435,8 @@ public class SmileRating extends BaseRating {
      *
      * @param smile is he smiley type you want this rating bar to show as selected smile
      */
-    public void setSelectedSmile(@Smiley int smile) {
-        setSelectedSmile(smile, false);
+    public void setSelectedSmiley(@Smiley int smile) {
+        setSelectedSmiley(smile, false);
     }
 
     /**
@@ -446,16 +446,16 @@ public class SmileRating extends BaseRating {
      * @param animate true if you want to set the selected smiley and animate it,
      *                false for no animation
      */
-    public void setSelectedSmile(@Smiley int smile, boolean animate) {
+    public void setSelectedSmiley(@Smiley int smile, boolean animate) {
         mPendingActionSmile = smile;
-        setSelectedSmile(smile, mTouchPoints.get(smile), true, animate);
+        setSelectedSmiley(smile, mTouchPoints.get(smile), true, animate);
     }
 
-    private void setSelectedSmile(@Smiley int smile, Point point, boolean check, boolean animate) {
-        if (mSelectedSmile == smile && check) {
+    private void setSelectedSmiley(@Smiley int smile, Point point, boolean check, boolean animate) {
+        if (mSelectedSmiley == smile && check) {
             return;
         }
-        mSelectedSmile = smile;
+        mSelectedSmiley = smile;
         if (mFaceCenter == null || point == null) {
             return;
         }
@@ -469,12 +469,12 @@ public class SmileRating extends BaseRating {
     }
 
     @Smiley
-    public int getSelectedSmile() {
-        return mSelectedSmile;
+    public int getSelectedSmiley() {
+        return mSelectedSmiley;
     }
 
     public int getRating() {
-        return getSelectedSmile() + 1;
+        return getSelectedSmiley() + 1;
     }
 
     /**

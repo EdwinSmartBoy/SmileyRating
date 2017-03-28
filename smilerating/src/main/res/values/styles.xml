@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="SmileRating">
+    <declare-styleable name="SmileyRating">
         <attr name="angryColor" format="color" />
         <attr name="normalColor" format="color" />
         <attr name="drawingColor" format="color" />
